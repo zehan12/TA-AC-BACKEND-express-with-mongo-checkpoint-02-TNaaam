@@ -1,0 +1,54 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/nav_bar.ejs') %>
+<div class="banner">
+    <h1>Update Form Page</h1>
+    <p>Welcome to Update page</p>
+</div>
+<div class="container">
+    <h2>Update your Event</h2>
+</div>
+
+<div class="container">
+    <form action="/event/<%= events.id %>/update" method="POST" enctype="multipart/form-data" >
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Name of Event</label>
+            <input type="text" class="form-control" name="title" id="exampleFormControlInput1" value="<%= events.title %>">
+        </div>
+
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Summary of Event</label>
+            <input type="text" name="summary" class="form-control" id="exampleFormControlInput1" value="<%= events.summary %>">
+        </div>
+
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Host Name</label>
+            <input type="text" name="host" class="form-control" id="exampleFormControlInput1" value="<%= events.host %>">
+        </div>
+
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Place of Event</label>
+            <input type="text" name="location" class="form-control" id="exampleFormControlInput1" value="<%= events.location %>">
+        </div>
+
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Event Category</label>
+            <input type="text" name="event_category" class="form-control" id="exampleFormControlInput1" value="<%= events.event_category %>">
+        </div>
+
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Add Image</label>
+            <input class="form-control" type="file" name="image"  id="formFile" value="<%= events.image %>">
+        </div>
+
+
+        <div class="col-md-6">
+            <label for="inputEmail4" class="form-label">Start_Date</label>
+            <input type="date" name="start_date" class="form-control" id="inputEmail4" value="<%= String( new Date( Date.parse('2012-01-26T13:51:50.417-07:00') )).split(" ").splice(1,3).join("/") %>">
+
+            <label for="inputPassword4" class="form-label">End_Date</label>
+            <input type="date" name="end_date" class="form-control" id="inputPassword4" value="<%= events.end_date %>"> 
+        </div> <br>
+
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+</div>

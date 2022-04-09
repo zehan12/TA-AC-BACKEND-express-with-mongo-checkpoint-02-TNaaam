@@ -7,6 +7,8 @@ var remarkSchema = new Schema({
         { type: Schema.Types.ObjectId,
             ref: "Event"
         }
-});
+}, {
+    timestamps: true
+}  );
 
 module.exports = mongoose.model( "Remark", remarkSchema );
