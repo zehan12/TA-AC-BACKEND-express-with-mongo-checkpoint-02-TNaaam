@@ -1,0 +1,61 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/nav_bar.ejs') %>
+<div class="banner">
+    <h1>Show Page</h1>
+    <p>Welcome to show page</p>
+</div>
+<div style="text-align: center;" class="card mb-3">
+    <img style="height: 500px; width: 800px; margin: 20px 300px;" src="/images/wp2349395.jpeg" class="card-img-top" alt="...">
+    <div class="card-body">
+    <h2 class="card-title"><%= events.title %></h2>
+    <p class="card-text"><%= events.summary %></p>
+    <button type="button" class="btn btn-warning"> <%= events.event_category %></button>
+    <p>Location: <%= events.location.charAt(0).toUpperCase()+events.location.slice(1) %></p>
+    <p class="card-text"><small class="text-muted"><%= new Date(events.createdAt) %></small></p>
+    <div style="display: flex; justify-content: space-evenly;" class="comment-footer"> <span class="text-muted float-right"><%=  %><span> 
+        <h4>Likes:  <%= events.likes %></h4>
+        <a href="/event/<%= events._id %>/like"><button type="button" class="btn btn-success btn-sm">Like</button></a>
+        <a href="/event/<%= events._id %>/dislike"><button type="button" class="btn btn-success btn-sm">Dislike</button></a>
+        <a href="/event/<%= events._id %>/update"> <button type="button" class="btn btn-success btn-sm">Edit</button> </a>
+        <a href="/event/<%= events._id %>/delete"> <button type="button" class="btn btn-danger btn-sm">Delete</button> </a> </div>
+    </div>
+    <div class="mb-3 container">
+        <div class="form-group">
+            <form action="/event/<%= events._id %>/remark/new" method="POST">
+                <label for="exampleFormControlInput1" class="form-label">Leave a Remarks:</label>
+                <input type="text" class="form-control" name="content" placeholder="Add Remarks"> <br>
+                <button type="submit" class="btn btn-success">Add Remarks</button>
+            </form>
+        </div>
+    </div>
+
+
+    <div>
+        <div class="row d-flex justify-content-center mt-100 mb-100">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="comment-widgets">
+                        <!-- Comment Row -->
+                        <% events.remarksId.forEach((e)=>{ %>
+                        <div style="padding: 30px;" class="d-flex flex-row comment-row m-t-0">
+                            <div class="p-2"> <img style="padding-bottom: 20px;" src="" width="50" class="rounded-circle"></div>
+                            <div class="comment-text w-100">
+                                <h6 class="font-medium"></h6> <span style="padding-bottom: 20px;" class="m-b-15 d-block"><%= e.content %></span>
+                                <div style="display: flex; justify-content: space-evenly;" class="comment-footer"> <span class="text-muted float-right"><%= e.createdAt %><span> 
+                                    <a href="/event/<%= events._id %>/remark/<%= e.id %>/update"> <button type="button" class="btn btn-success btn-sm">Edit</button> </a>
+                                    <button type="button" class="btn btn-success btn-sm">Publish</button>
+                                    <a href="/event/<%= events._id %>/remark/<%= e.id %>/delete"> <button type="button" class="btn btn-danger btn-sm">Delete</button> </a> </div>
+                            </div>
+                        </div>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+
+    <span class="m-b-15 d-block"></span>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+.banner {
+  padding: 60px 600px;
+  background-color: #d5d0d0; }
+
+.flex {
+  display: flex; }
+
+.wrap {
+  flex-wrap: wrap; }
+
+.fixed {
+  position: fixed; }
+
+.side_bar {
+  width: 20%;
+  height: 100vh;
+  text-align: center; }
+
+.banner_index {
+  padding: 30px 480px; }
+
+.main {
+  width: 88%;
+  padding: 30px;
+  margin: 0  300px; }
+
+.sticky {
+  position: sticky;
+  position: fixed;
+  padding: 100px; }
+
+.card {
+  margin: 20px; }
+
+/*# sourceMappingURL=main.css.map */

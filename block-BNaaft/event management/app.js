@@ -9,6 +9,7 @@ var mongoose = require('mongoose');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var eventRouter = require('./routes/event');
+var remarkRouter = require('./routes/remark');
 
 mongoose.connect( 'mongodb://localhost/eventmanagement', ( err ) => {
   console.log( err ? err : "connected to database" );
@@ -25,7 +26,6 @@ app.use(
   })
 );
 
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -38,6 +38,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/event', eventRouter)
+app.use('/event/:eventsId/remark', remarkRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
