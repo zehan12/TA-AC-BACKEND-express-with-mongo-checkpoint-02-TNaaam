@@ -112,41 +112,44 @@ router.get( '/:id/show', ( req, res, next ) => {
 } );
 
 
-// router.get( '/:id/show', async ( req, res, next ) => {
+
+// router.get( '/:id/update', ( req, res, next ) => {
 //     var id = req.params.id;
-//     try {
-//         // var events = await Event.findById( id ).populate( 'remarksId' ).populate( 'categoriesId' );
-//         var events = await Event.findById( id ).populate( 'remarksId' )
-//         console.log(events);
-//             res.render( 'event/show', { events } );
-//     } catch ( err ) {
-//         return next( err );
-//     }
+//     Event.findById( id, ( err, events ) => {
+//         if ( err ) return next( err );
+//         res.render( 'event/update', { events } );
+//     } )
 // } );
 
-router.get( '/:id/update', ( req, res, next ) => {
+router.post( '/:id/update', async ( req, res, next ) => {
     var id = req.params.id;
-    Event.findById( id, ( err, events ) => {
-        if ( err ) return next( err );
-        res.render( 'event/update', { events } );
-    } )
-} );
-
-router.post( '/:id/update', ( req, res, next ) => {
-    var id = req.params.id;
-    console.log(req.body, "raw date brfor update");
-    Event.findByIdAndUpdate( id, req.body, ( err, updatedEvent ) => {
-        if ( err ) return next( err );
-        console.log(updatedEvent,"after update")
+    console.log(req.body,"BEFORE UPDATE")
+    try {
+        const eventUpdate = await Event.findByIdAndUpdate( id, req,body, { new: true } );
+        console.log(eventUpdate,"AFTER UPDATE");
         res.redirect( '/event/' + id + '/show' );
-    } );
+    } catch ( err ) {
+        return next( err );
+    }
 } );
 
 router.get( '/:id/delete', async ( req, res, next ) => {
     var id = req.params.id;
     try {
         const deleteEvent = await Event.findByIdAndDelete( id );
+        console.log(deleteEvent);
         const deleteMultiple = await Remark.deleteMany( { eventsId: id });
+        let categories = deleteEvent.event_category;
+        var eventsId = deleteEvent._id;
+        ( async () => {
+            for await ( const category of categories ){
+            const categoryFound = await Category.findOneAndUpdate( { name: category }, { $pull: { eventsId: eventsId } },{ new:true } );
+            console.log(categoryFound.eventsId.length, "id", category);
+                    if ( categoryFound.eventsId.length === 0 ){
+                        await Category.findOneAndDelete( { name: category } );
+                    }
+            }
+        })();
         console.log(deleteMultiple,"deleted")
         res.redirect('/event/index');
     } catch ( err ) {
