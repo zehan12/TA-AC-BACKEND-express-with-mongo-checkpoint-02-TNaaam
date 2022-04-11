@@ -1,0 +1,69 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/nav_bar.ejs') %>
+
+<div class="flex">
+    <aside class="side_bar fixed">
+        <div>
+            <a href="/event/index"> All Events </a>
+            <h3>Filters</h3>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                CATEGORY
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                    <% categoryIndex.forEach((cat)=>{ %>
+                        <li><a href="/event/category/<%= cat.name %>" class="dropdown-item " href="#"><%= cat.name %></a></li>
+                    <% }) %>
+                </ul>
+            </div>
+            <div style="padding: 39px 0;" class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                Location
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                    <% location.forEach((loc)=>{ %>
+                        <li><a class="dropdown-item " href="/event/location/<%= loc %>"><%= loc %></a></li>
+                    <% }) %>
+                </ul>
+            </div>
+            <div style="padding: 8px 0;" class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                Date
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                        <li><a class="dropdown-item " href="/event/date/latest">Latest</a></li>
+                        <li><a class="dropdown-item " href="/event/date/oldest">Oldest</a></li>
+                </ul>
+            </div>
+        </div>
+    </aside>
+
+    <div class="main ">
+        <div class="banner_index">
+            <h1>All Events</h1>
+        </div>
+    
+        <div class="container  body">
+            <h2>Event lists</h2>
+            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here, content here’, making it look like readable English. </p>
+            <div class="flex wrap">
+            <% data.forEach((event)=>{ %>
+                <% if ( event.length == 0 ) { %>
+                    <h3>No Events Yet</h3>
+                <% } else { %>
+                    <div class="card" style="width: 18rem;">
+                        <img src="/images/upcoming-event-neon-sign-text-vector_118419-486.jpeg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= event.title %></h5>
+                            <p class="card-text"><%=  String(event).substring(0,100) %></p>
+                            <p><%=new Date( Date.parse(event.start_date) ) %></p>
+                            <p><%= event.start_date %></p>
+                            <a href="/event/<%= event.id %>/show" class="btn btn-primary">Show</a>
+                        </div>
+                    </div>
+                <% } %>
+            <% }) %>
+        </div>
+        </div>
+    </div>
+</div>
